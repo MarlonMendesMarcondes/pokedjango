@@ -1,0 +1,140 @@
+{% extends "pokedex/base.html" %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% load static %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'pokedex/css/comparar.css' %}">
+</head>
+
+<!-- Formulário de Busca -->
+<header class="">
+    <form method="get" action="{% url 'comparar_pokemons' %}" class="form-busca mb-5">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-4 text-center">
+                <input type="text" id="pokemon1" name="pokemon1" class="form-control" placeholder="Nome ou ID do Pokémon" value="{{ request.GET.pokemon1 }}" list="pokemon-list">
+            </div>
+            <div class="col-md-4 text-center m-3">
+                <input type="text" id="pokemon2" name="pokemon2" class="form-control" placeholder="Nome ou ID do Pokémon" value="{{ request.GET.pokemon2 }}" list="pokemon-list">
+            </div>
+            <div class="col-md-2 text-center d-flex align-items-end justify-content-center m-3">
+                <button type="submit" class="btn btn-primary">Comparar</button>
+                <a href="{% url 'comparar_pokemons' %}" class="btn btn-secondary ms-2">Limpar</a>
+            </div>
+        </div>
+    </form>
+</header>
+<div class="container py-5">
+
+    <datalist id="pokemon-list">
+        {% for pokemon in all_pokemons %}
+        <option value="{{ pokemon.name }}">{{ pokemon.name }}</option>
+        {% endfor %}
+    </datalist>
+
+    <!-- Exibição dos Pokémon -->
+    <div class="d-flex justify-content-center align-items-center">
+        {% if pokemon1 %}
+        <div class="col d-flex justify-content-center">
+            <div class="card rounded-4 text-center card-background" style="{{ pokemon1.card_style }}">
+                <div class="position-relative mb-5">
+                    <span class="badge bg-light text-dark position-absolute top-0 end-0 m-2">{{ pokemon1.hp }} HP</span>
+                </div>
+                <img src="{{ pokemon1.image.url|default:default_image_url }}" data-gif="{{ pokemon1.gif_url }}" class="pokemon-img mx-auto d-block mt-3" alt="{{ pokemon1.name }}">
+                <div class="card-body">
+                    <h5 class="pokemon-name text-capitalize m-3">{{ pokemon1.name }}</h5>
+                    
+                    {% if pokemon1.primary_type.name %}
+                    <span class="pokemon-type badge rounded-pill px-3 py-2 tipo-{{ pokemon1.primary_type }}">
+                        {{ pokemon1.primary_type.name }}
+                    </span>
+                    {% endif %}
+                    {% if pokemon1.secondary_type %}
+                    <span class="pokemon-type badge rounded-pill px-3 py-2 tipo-{{ pokemon1.secondary_type }}">
+                        {{ pokemon1.secondary_type.name }}
+                    </span>
+                    {% endif %}
+
+                    <div class="stats d-flex justify-content-around mt-4">
+                        <div class="text-center bg-white rounded-4 shadow-sm px-3 py-2 shadow-sm">
+                            <div class="fw-bold text-uppercase small text-muted">ATK</div>
+                            <div class="fs-5 fw-semibold text-dark">{{ pokemon1.attack|default:"--" }}</div>
+                        </div>
+                        <div class="text-center bg-white rounded-4 shadow-sm px-3 py-2 shadow-sm">
+                            <div class="fw-bold text-uppercase small text-muted">DEF</div>
+                            <div class="fs-5 fw-semibold text-dark">{{ pokemon1.defense|default:"--" }}</div>
+                        </div>
+                        <div class="text-center bg-white rounded-4 shadow-sm px-3 py-2 shadow-sm">
+                            <div class="fw-bold text-uppercase small text-muted">SPD</div>
+                            <div class="fs-5 fw-semibold text-dark">{{ pokemon1.speed|default:"--" }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <!-- Exibe a imagem padrão se pokemon1 não existir -->
+        <div class="col d-flex justify-content-center">
+            <div class="card rounded-4 text-center empty-card">
+                <div class="card-body">
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <!-- Imagem "VS" -->
+        <div class="vs-image mx-3">
+            <img src="{% static 'pokedex/img/vs.png' %}" alt="VS" class="img-fluid" style="width: 100px; height: auto;">
+        </div>
+
+        {% if pokemon2 %}
+        <div class="col d-flex justify-content-center">
+            <div class="card rounded-4 text-center card-background" style="{{ pokemon2.card_style }}">
+                <div class="position-relative mb-5">
+                    <span class="badge bg-light text-dark position-absolute top-0 end-0 m-2">{{ pokemon2.hp }} HP</span>
+                </div>
+                <img src="{{ pokemon2.image.url }}" data-gif="{{ pokemon2.gif_url }}" class="pokemon-img mx-auto d-block mt-3" alt="{{ pokemon2.name }}">
+                <div class="card-body">
+                    <h5 class="pokemon-name text-capitalize m-3">{{ pokemon2.name }}</h5>
+                    
+                    {% if pokemon2.primary_type.name %}
+                    <span class="pokemon-type badge rounded-pill px-3 py-2 tipo-{{ pokemon2.primary_type }}">
+                        {{ pokemon2.primary_type.name }}
+                    </span>
+                    {% endif %}
+                    {% if pokemon2.secondary_type %}
+                    <span class="pokemon-type badge rounded-pill px-3 py-2 tipo-{{ pokemon2.secondary_type }}">
+                        {{ pokemon2.secondary_type.name }}
+                    </span>
+                    {% endif %}
+
+                    <div class="stats d-flex justify-content-around mt-4">
+                        <div class="text-center bg-white rounded-4 shadow-sm px-3 py-2 shadow-sm">
+                            <div class="fw-bold text-uppercase small text-muted">ATK</div>
+                            <div class="fs-5 fw-semibold text-dark">{{ pokemon2.attack|default:"--" }}</div>
+                        </div>
+                        <div class="text-center bg-white rounded-4 shadow-sm px-3 py-2 shadow-sm">
+                            <div class="fw-bold text-uppercase small text-muted">DEF</div>
+                            <div class="fs-5 fw-semibold text-dark">{{ pokemon2.defense|default:"--" }}</div>
+                        </div>
+                        <div class="text-center bg-white rounded-4 shadow-sm px-3 py-2 shadow-sm">
+                            <div class="fw-bold text-uppercase small text-muted">SPD</div>
+                            <div class="fs-5 fw-semibold text-dark">{{ pokemon2.speed|default:"--" }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <!-- Exibe a imagem padrão se pokemon2 não existir -->
+        <div class="col d-flex justify-content-center">
+            <div class="card rounded-4 text-center empty-card">
+                <div class="card-body">
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,18 @@
+{% extends "admin/change_list.html" %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% block sidebar %}
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+            Filtros
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {% for filter in cl.filter_specs %}
+                <li>
+                    <a class="dropdown-item" href="{{ filter.spec.query_string }}">{{ filter.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

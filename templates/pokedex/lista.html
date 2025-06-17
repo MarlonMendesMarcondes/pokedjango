@@ -1,0 +1,56 @@
+{% extends "pokedex/base.html" %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'pokedex/css/lista.css' %}">
+    <div class="container py-5">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+            {% for pokemon in pokemons %}
+            <div class="col d-flex justify-content-center ">
+                <div class="card shadow rounded-4 text-center card-background" style="{{ pokemon.card_style }}">
+
+                    <div class="position-relative mb-5">
+                        <span class="badge bg-light text-dark position-absolute top-0 end-0 m-2">{{ pokemon.hp }} HP</span>
+                    </div>
+    
+                    <img src="{{ pokemon.image.url|default:'pokemon.image_url' }}"  data-gif="{{ pokemon.gif_url }}" class="pokemon-img mx-auto d-block mt-3" alt="{{ pokemon.name }}">
+                    
+                    <div class="card-body">
+                        <h5 class="pokemon-name text-capitalize m-3">{{ pokemon.name }}</h5>
+                        
+                        {% if pokemon.primary_type.name %}
+                        <span class="pokemon-type badge rounded-pill px-3 py-2 tipo-{{ pokemon.primary_type }}">
+                            {{ pokemon.primary_type.name }}
+                        </span>
+                        {% endif %}
+                        {% if pokemon.secondary_type %}
+                        <span class="pokemon-type badge rounded-pill px-3 py-2 tipo-{{ pokemon.secondary_type }}">
+                            {{ pokemon.secondary_type.name }}
+                        </span>
+                        {% endif %}
+
+                        <div class="stats d-flex justify-content-around mt-4">
+                            <div class="text-center bg-white rounded-4 shadow-sm px-3 py-2 shadow-sm">
+                              <div class="fw-bold text-uppercase small text-muted">ATK</div>
+                              <div class="fs-5 fw-semibold text-dark">{{ pokemon.attack|default:"--" }}</div>
+                            </div>
+                            <div class="text-center bg-white rounded-4 shadow-sm px-3 py-2 shadow-sm">
+                              <div class="fw-bold text-uppercase small text-muted">DEF</div>
+                              <div class="fs-5 fw-semibold text-dark">{{ pokemon.defense|default:"--"  }}</div>
+                            </div>
+                            <div class="text-center bg-white rounded-4 shadow-sm px-3 py-2 shadow-sm">
+                              <div class="fw-bold text-uppercase small text-muted">SPD</div>
+                              <div class="fs-5 fw-semibold text-dark">{{ pokemon.speed|default:"--" }}</div>
+                            </div>
+                        </div>
+                        
+                    </div>
+    
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    
+{% endblock content %}

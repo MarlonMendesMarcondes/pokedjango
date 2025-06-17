@@ -1,0 +1,44 @@
+{% extends "pokedex/base.html" %}
+{% load static %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>{{ pokemon.name|capfirst }}</title>
+    <link rel="stylesheet" href="{% static 'pokedex/css/detalhe.css' %}">
+    
+<body>
+    <div class="card ">
+        <div class="card-header background-{{ pokemon.primary_type|lower }}">
+            <span class="hp">HP {{ pokemon.hp|default:"??" }}</span>
+        </div>
+        <div class="pokemon-image-container">
+            <img id="pokemon-image-{{ pokemon.id }}" 
+                    src="{{ pokemon.image_url }}" 
+                    data-static="{{ pokemon.image_url }}" 
+                    data-animated="{{ pokemon.gif_url }}" 
+                    alt="{{ pokemon.name }}" 
+                    class="pokemon-img">
+        </div>
+        <h2 class="pokemon-name">{{ pokemon.name|capfirst }}</h2>
+
+        {% if pokemon.primary_type %}
+            <span class="pokemon-type tipo-{{ pokemon.primary_type }}">{{ pokemon.primary_type }}</span>
+        {% endif %}
+
+        <div class="stats">
+            <div>
+                <strong>{{ pokemon.attack|default:"--" }}</strong>
+                <span>Attack</span>
+            </div>
+            <div>
+                <strong>{{ pokemon.defense|default:"--" }}</strong>
+                <span>Defense</span>
+            </div>
+            <div>
+                <strong>{{ pokemon.speed|default:"--" }}</strong>
+                <span>Speed</span>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+

@@ -1,0 +1,68 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.form-busca {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.vs-image img {
+    width: 200px; /* Ajuste o tamanho conforme necessário */
+    height: auto; /* Mantém a proporção da imagem */
+}
+.pokemon-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    width: 45%;
+    background-color: black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.card-background {
+    width: 18rem;
+    background-size: cover; 
+    background-blend-mode: multiply; 
+}
+.pokemon-img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    padding: 10px;
+}
+
+.pokemon-name {
+    margin: 10px 0 5px;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: capitalize;
+    color: #333;
+}
+
+.empty-card {
+    background-image: url('../img/default.jpg');
+    background-size:cover; /* Ajusta a imagem para caber no card */
+    background-repeat: no-repeat; /* Evita repetição da imagem */
+    background-position: center; /* Centraliza a imagem */ /* Substitua pela URL da imagem padrão */
+    border-radius: 20px;
+    width: 18rem;
+    height: 30rem;
+    text-align: center;
+    padding-bottom: 20px;
+    overflow: hidden;
+    display: flex; /* Adiciona flexbox */
+    align-items: center; /* Centraliza verticalmente */
+    justify-content: center; /* Centraliza horizontalmente */
+}
+
+

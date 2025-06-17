@@ -1,0 +1,31 @@
+td, th {
+    text-align: center; /* Centraliza o texto nas colunas */
+    align-items: center;
+}
+
+.field-name, .field-base_experience, .field-height, .field-weight, .field-primary_type, .field-secondary_type {
+    text-align: center;
+    align-items: center;
+    margin-top: auto; /* Centraliza os textos das características específicas */
+}
+
+fieldset.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 600px;
+}
+
+fieldset.card legend {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+}
+
+fieldset.card img {
+    display: block;
+    margin: 0 auto 15px;
+    border-radius: 8px;
+}

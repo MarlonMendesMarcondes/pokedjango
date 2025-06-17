@@ -1,0 +1,177 @@
+{% extends "pokedex/base.html" %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'pokedex/css/battle.css' %}">
+<div class="container py-5">
+    <datalist id="pokemon-list">
+        {% for pokemon in all_pokemons %}
+        <option value="{{ pokemon.name }}">{{ pokemon.name }}</option>
+        {% endfor %}
+    </datalist>
+    <h2 class="text-center">Batalha Pokémon</h2>
+    <form method="get" action="">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="pokemon1">Escolha o Pokémon 1:</label>
+                <input type="text" id="pokemon1" name="pokemon1" class="form-control" placeholder="Nome ou ID do Pokémon 1" list="pokemon-list">
+                <label for="move1">Escolha o Movimento 1:</label>
+                <input type="text" id="move1" name="move1" class="form-control" placeholder="Nome do Movimento 1" list="moves1">
+                <datalist id="moves1"></datalist>
+            </div>
+            <div class="col-md-6">
+                <label for="pokemon2">Escolha o Pokémon 2:</label>
+                <input type="text" id="pokemon2" name="pokemon2" class="form-control" placeholder="Nome ou ID do Pokémon 2" list="pokemon-list">
+                <label for="move2">Escolha o Movimento 2:</label>
+                <input type="text" id="move2" name="move2" class="form-control" placeholder="Nome do Movimento 2" list="moves2">
+                <datalist id="moves2"></datalist>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Batalhar</button>
+        <a href="{% url 'pokemon-battle' %}" class="btn btn-secondary ms-2">Limpar</a>
+    </form>
+
+    <div class="d-flex justify-content-center align-items-center mt-5">
+        {% if pokemon1 %}
+        <div class="col-md-4 d-flex justify-content-center">
+            <div class="card rounded-4 text-center card-background" style="{{ pokemon1.card_style }}">
+                <div class="position-relative mb-5">
+                    <span class="badge bg-light text-dark position-absolute top-0 end-0 m-2">{{ pokemon1.hp }} HP</span>
+                </div>
+                <img src="{{ pokemon1.image.url|default:default_image_url }}" data-gif="{{ pokemon1.gif_url }}" class="pokemon-img mx-auto d-block mt-3" alt="{{ pokemon1.name }}">
+                <div class="card-body">
+                    <h5 class="pokemon-name text-capitalize m-3">{{ pokemon1.name }}</h5>
+                    
+                    {% if pokemon1.primary_type.name %}
+                    <span class="pokemon-type badge rounded-pill px-3 py-2 tipo-{{ pokemon1.primary_type }}">
+                        {{ pokemon1.primary_type.name }}
+                    </span>
+                    {% endif %}
+                    {% if pokemon1.secondary_type %}
+                    <span class="pokemon-type badge rounded-pill px-3 py-2 tipo-{{ pokemon1.secondary_type }}">
+                        {{ pokemon1.secondary_type.name }}
+                    </span>
+                    {% endif %}
+
+                    <div class="stats d-flex justify-content-around mt-4">
+                        <div class="text-center bg-white rounded-4 shadow-sm px-3 py-2 shadow-sm">
+                            <div class="fw-bold text-uppercase small text-muted">ATK</div>
+                            <div class="fs-5 fw-semibold text-dark">{{ pokemon1.attack|default:"--" }}</div>
+                        </div>
+                        <div class="text-center bg-white rounded-4 shadow-sm px-3 py-2 shadow-sm">
+                            <div class="fw-bold text-uppercase small text-muted">DEF</div>
+                            <div class="fs-5 fw-semibold text-dark">{{ pokemon1.defense|default:"--" }}</div>
+                        </div>
+                        <div class="text-center bg-white rounded-4 shadow-sm px-3 py-2 shadow-sm">
+                            <div class="fw-bold text-uppercase small text-muted">SPD</div>
+                            <div class="fs-5 fw-semibold text-dark">{{ pokemon1.speed|default:"--" }}</div>
+                        </div>
+                    </div>
+                    <div class="text-center bg-white rounded-4 shadow-sm mt-3 px-3 py-2 shadow-sm" >
+                        <div class="fs-5 fw-semibold text-dark">Damage to: {{ damage_to_pokemon2 }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-md-4 d-flex justify-content-center">
+            <div class="card rounded-4 text-center empty-card">
+                <div class="card-body">
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="vs-image mx-3">
+            <img src="{% static 'pokedex/img/vs.png' %}" alt="VS" class="img-fluid" style="width: 100px; height: auto;">
+        </div>
+
+        {% if pokemon2 %}
+        <div class="col-md-4 d-flex justify-content-center">
+            <div class="card rounded-4 text-center card-background" style="{{ pokemon2.card_style }}">
+                <div class="position-relative mb-5">
+                    <span class="badge bg-light text-dark position-absolute top-0 end-0 m-2">{{ pokemon2.hp }} HP</span>
+                </div>
+                <img src="{{ pokemon2.image.url }}" data-gif="{{ pokemon2.gif_url }}" class="pokemon-img mx-auto d-block mt-3" alt="{{ pokemon2.name }}">
+                <div class="card-body">
+                    <h5 class="pokemon-name text-capitalize m-3">{{ pokemon2.name }}</h5>
+                    
+                    {% if pokemon2.primary_type.name %}
+                    <span class="pokemon-type badge rounded-pill px-3 py-2 tipo-{{ pokemon2.primary_type }}">
+                        {{ pokemon2.primary_type.name }}
+                    </span>
+                    {% endif %}
+                    {% if pokemon2.secondary_type %}
+                    <span class="pokemon-type badge rounded-pill px-3 py-2 tipo-{{ pokemon2.secondary_type }}">
+                        {{ pokemon2.secondary_type.name }}
+                    </span>
+                    {% endif %}
+
+                    <div class="stats d-flex justify-content-around mt-4">
+                        <div class="text-center bg-white rounded-4 shadow-sm px-3 py-2 shadow-sm">
+                            <div class="fw-bold text-uppercase small text-muted">ATK</div>
+                            <div class="fs-5 fw-semibold text-dark">{{ pokemon2.attack|default:"--" }}</div>
+                        </div>
+                        <div class="text-center bg-white rounded-4 shadow-sm px-3 py-2 shadow-sm">
+                            <div class="fw-bold text-uppercase small text-muted">DEF</div>
+                            <div class="fs-5 fw-semibold text-dark">{{ pokemon2.defense|default:"--" }}</div>
+                        </div>
+                        <div class="text-center bg-white rounded-4 shadow-sm px-3 py-2 shadow-sm">
+                            <div class="fw-bold text-uppercase small text-muted">SPD</div>
+                            <div class="fs-5 fw-semibold text-dark">{{ pokemon2.speed|default:"--" }}</div>
+                        </div>
+                    </div>
+                    <div class="text-center bg-white rounded-4 shadow-sm mt-3 px-3 py-2 shadow-sm" >
+                        <div class="fs-5 fw-semibold text-dark">Damage to: {{ damage_to_pokemon1 }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-md-4 d-flex justify-content-center">
+            <div class="card rounded-4 text-center empty-card">
+                <div class="card-body">
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<script>
+    // Função para buscar movimentos de um Pokémon
+    async function fetchMoves(pokemonName, datalistId) {
+        try {
+            const response = await fetch(`/api/pokemon/${pokemonName}/moves/`); // Substitua pela URL correta da sua API
+            if (!response.ok) {
+                console.error("Erro ao buscar movimentos:", response.statusText);
+                return;
+            }
+            const moves = await response.json();
+            const datalist = document.getElementById(datalistId);
+            datalist.innerHTML = ""; // Limpa o datalist
+            moves.forEach(move => {
+                const option = document.createElement("option");
+                option.value = move.name;
+                datalist.appendChild(option);
+            });
+        } catch (error) {
+            console.error("Erro ao buscar movimentos:", error);
+        }
+    }
+
+    // Atualiza os movimentos quando o Pokémon 1 é preenchido
+    document.getElementById("pokemon1").addEventListener("input", function () {
+        const pokemonName = this.value;
+        if (pokemonName) {
+            fetchMoves(pokemonName, "moves1");
+        }
+    });
+
+    // Atualiza os movimentos quando o Pokémon 2 é preenchido
+    document.getElementById("pokemon2").addEventListener("input", function () {
+        const pokemonName = this.value;
+        if (pokemonName) {
+            fetchMoves(pokemonName, "moves2");
+        }
+    });
+</script>
+{% endblock content %}

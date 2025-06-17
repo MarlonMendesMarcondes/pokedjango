@@ -1,0 +1,67 @@
+{% extends "pokedex/base.html" %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'pokedex/css/carrossel.css' %}">
+    <div id="pokemonCarousel" class="carousel slide" data-bs-ride="carousel">
+        <!-- Indicadores -->
+        <div class="carousel-indicators">
+            {% for pokemon in pokemons %}
+            <button type="button" data-bs-target="#pokemonCarousel" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}" aria-current="{% if forloop.first %}true{% endif %}" aria-label="Slide {{ forloop.counter }}"></button>
+            {% endfor %}
+        </div>
+    
+        <!-- Slides -->
+        <div class="carousel-inner">
+            {% for pokemon in pokemons %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <div class="d-flex justify-content-center">
+                    <div class="card shadow rounded-4 text-center card-background" style="{{ pokemon.card_style }}">
+                        <div class="position-relative mb-5">
+                            <span class="badge bg-light text-dark position-absolute top-0 end-0 m-2">{{ pokemon.hp }} HP</span>
+                        </div>
+                        <img src="{{ pokemon.image.url }}" class="pokemon-img mx-auto d-block mt-3" alt="{{ pokemon.name }}">
+                        <div class="card-body">
+                            <h5 class="pokemon-name text-capitalize m-3">{{ pokemon.name }}</h5>
+                            {% if pokemon.primary_type.name %}
+                            <span class="pokemon-type badge rounded-pill px-3 py-2 tipo-{{ pokemon.primary_type }}">
+                                {{ pokemon.primary_type.name }}
+                            </span>
+                            {% endif %}
+                            {% if pokemon.secondary_type %}
+                            <span class="pokemon-type badge rounded-pill px-3 py-2 tipo-{{ pokemon.secondary_type }}">
+                                {{ pokemon.secondary_type.name }}
+                            </span>
+                            {% endif %}
+                            <div class="stats d-flex justify-content-around mt-4">
+                            <div class="text-center bg-white rounded-4 shadow-sm px-3 py-2 shadow-sm">
+                              <div class="fw-bold text-uppercase small text-muted">ATK</div>
+                              <div class="fs-5 fw-semibold text-dark">{{ pokemon.attack|default:"--" }}</div>
+                            </div>
+                            <div class="text-center bg-white rounded-4 shadow-sm px-3 py-2 shadow-sm">
+                              <div class="fw-bold text-uppercase small text-muted">DEF</div>
+                              <div class="fs-5 fw-semibold text-dark">{{ pokemon.defense|default:"--"  }}</div>
+                            </div>
+                            <div class="text-center bg-white rounded-4 shadow-sm px-3 py-2 shadow-sm">
+                              <div class="fw-bold text-uppercase small text-muted">SPD</div>
+                              <div class="fs-5 fw-semibold text-dark">{{ pokemon.speed|default:"--" }}</div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    
+        <!-- Controles -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#pokemonCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#pokemonCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Próximo</span>
+        </button>
+    </div>
+{% endblock content %}
