@@ -1,0 +1,76 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Press Start 2P', cursive; /* Fonte estilo pixel art */
+}
+
+.bg-image {
+    background-image:url("../img/texture.jpg");
+    background-color: #202020;
+    background-blend-mode: multiply;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+}
+
+.landing-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    color: white;
+    position: relative;
+    z-index: 1;
+}
+
+.pokemon-logo {
+    max-width: 80%;
+    height: auto;
+    margin-bottom: 2rem;
+}
+
+.btn-enter {
+    font-size: 1.5rem;
+    padding: 1rem 2rem;
+    border: 3px solid white;
+    border-radius: 10px;
+    background-color: #ffcb05; /* Amarelo Pokémon */
+    color: #3d7dca; /* Azul Pokémon */
+    text-shadow: 2px 2px 4px #000000;
+    transition: transform 0.2s;
+}
+
+.btn-enter:hover {
+    transform: scale(1.1);
+    background-color: #c7a008;
+    color: #2a588f;
+}
+
+.links-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.links-container .btn {
+    font-size: 1.2rem;
+    padding: 0.8rem 1.5rem;
+    border: 2px solid white;
+    border-radius: 8px;
+    background-color: #3d7dca; /* Azul Pokémon */
+    color: white;
+    text-shadow: 1px 1px 2px #000000;
+    transition: transform 0.2s;
+}
+
+.links-container .btn:hover {
+    transform: scale(1.05);
+    background-color: #2a588f;
+}

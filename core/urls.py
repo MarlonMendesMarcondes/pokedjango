@@ -10,9 +10,11 @@ from .views import (
     TypeListView,
     PokemonBattleView,
     pokemon_moves,
+    landing_page,
 )
 
 urlpatterns = [
+    path('', landing_page, name='landing_page'),
     path('pokemons/', PokemonListView.as_view(), name='buscar_pokemons'),
     path('caroussel/', PokemonCarouselView.as_view(), name='carrossel_pokemons'),
     # path('pokemons/<type>/', PokemonTypeListView.as_view(), name='lista'),

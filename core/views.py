@@ -196,4 +196,10 @@ class TypeListView(ListAPIView):
 
     def get_queryset(self):
         return Type.objects.all()
+
+
+from django.shortcuts import render
+
+def landing_page(request):
+    return render(request, 'pokedex/landing.html')
     
