@@ -6,7 +6,7 @@
     <div class="container py-5">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
             {% for pokemon in pokemons %}
-            <div class="col d-flex justify-content-center ">
+            <a href="{% url 'detalhe_pokemon' pokemon.id %}" class="col d-flex justify-content-center text-decoration-none text-dark">
                 <div class="card shadow rounded-4 text-center card-background" style="{{ pokemon.card_style }}">
 
                     <div class="position-relative mb-5">
@@ -47,10 +47,14 @@
                     </div>
     
                 </div>
-            </div>
+            </a>
             {% endfor %}
         </div>
     </div>
-    
+    <div id="loading" style="display: none; text-align: center;">
+        <p>Loading more pokemons...</p>
+    </div>
+
+    <script src="{% static 'pokedex/js/lista.js' %}"></script>
     
 {% endblock content %}

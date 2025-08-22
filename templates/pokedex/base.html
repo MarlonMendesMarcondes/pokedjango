@@ -29,35 +29,29 @@
         <input type="search" name="query" class="form-control form-control-dark" placeholder="Buscar por Nome ou ID" aria-label="Search">
       </form>
 
-      <div class="text-end">
-        <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-            Filtrar por Tipo
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li><a class="dropdown-item" href="/pokemons/">Todos os Tipos</a></li>
-            <li><a class="dropdown-item" href="/pokemons/?type=normal">Normal</a></li>
-            <li><a class="dropdown-item" href="/pokemons/?type=fire">Fire</a></li>
-            <li><a class="dropdown-item" href="/pokemons/?type=water">Water</a></li>
-            <li><a class="dropdown-item" href="/pokemons/?type=electric">Electric</a></li>
-            <li><a class="dropdown-item" href="/pokemons/?type=grass">Grass</a></li>
-            <li><a class="dropdown-item" href="/pokemons/?type=ice">Ice</a></li>
-            <li><a class="dropdown-item" href="/pokemons/?type=fighting">Fighting</a></li>
-            <li><a class="dropdown-item" href="/pokemons/?type=poison">Poison</a></li>
-            <li><a class="dropdown-item" href="/pokemons/?type=ground">Ground</a></li>
-            <li><a class="dropdown-item" href="/pokemons/?type=flying">Flying</a></li>
-            <li><a class="dropdown-item" href="/pokemons/?type=psychic">Psychic</a></li>
-            <li><a class="dropdown-item" href="/pokemons/?type=bug">Bug</a></li>
-            <li><a class="dropdown-item" href="/pokemons/?type=rock">Rock</a></li>
-            <li><a class="dropdown-item" href="/pokemons/?type=ghost">Ghost</a></li>
-            <li><a class="dropdown-item" href="/pokemons/?type=dragon">Dragon</a></li>
-            <li><a class="dropdown-item" href="/pokemons/?type=dark">Dark</a></li>
-            <li><a class="dropdown-item" href="/pokemons/?type=steel">Steel</a></li>
-            <li><a class="dropdown-item" href="/pokemons/?type=fairy">Fairy</a></li>
-          </ul>
-        </div>
-      </ul>
-      </div>
+      <form method="get" action="{% url 'buscar_pokemons' %}" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+        <select name="type" class="form-select form-select-dark" onchange="this.form.submit()">
+          <option value="" {% if not request.GET.type %}selected{% endif %}>Todos os Tipos</option>
+          <option value="normal" {% if request.GET.type == 'normal' %}selected{% endif %}>Normal</option>
+          <option value="fire" {% if request.GET.type == 'fire' %}selected{% endif %}>Fire</option>
+          <option value="water" {% if request.GET.type == 'water' %}selected{% endif %}>Water</option>
+          <option value="electric" {% if request.GET.type == 'electric' %}selected{% endif %}>Electric</option>
+          <option value="grass" {% if request.GET.type == 'grass' %}selected{% endif %}>Grass</option>
+          <option value="ice" {% if request.GET.type == 'ice' %}selected{% endif %}>Ice</option>
+          <option value="fighting" {% if request.GET.type == 'fighting' %}selected{% endif %}>Fighting</option>
+          <option value="poison" {% if request.GET.type == 'poison' %}selected{% endif %}>Poison</option>
+          <option value="ground" {% if request.GET.type == 'ground' %}selected{% endif %}>Ground</option>
+          <option value="flying" {% if request.GET.type == 'flying' %}selected{% endif %}>Flying</option>
+          <option value="psychic" {% if request.GET.type == 'psychic' %}selected{% endif %}>Psychic</option>
+          <option value="bug" {% if request.GET.type == 'bug' %}selected{% endif %}>Bug</option>
+          <option value="rock" {% if request.GET.type == 'rock' %}selected{% endif %}>Rock</option>
+          <option value="ghost" {% if request.GET.type == 'ghost' %}selected{% endif %}>Ghost</option>
+          <option value="dragon" {% if request.GET.type == 'dragon' %}selected{% endif %}>Dragon</option>
+          <option value="dark" {% if request.GET.type == 'dark' %}selected{% endif %}>Dark</option>
+          <option value="steel" {% if request.GET.type == 'steel' %}selected{% endif %}>Steel</option>
+          <option value="fairy" {% if request.GET.type == 'fairy' %}selected{% endif %}>Fairy</option>
+        </select>
+      </form>
     </div>
   </div>
 </header>

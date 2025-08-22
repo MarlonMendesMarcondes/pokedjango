@@ -7,37 +7,72 @@
     <link rel="stylesheet" href="{% static 'pokedex/css/detalhe.css' %}">
     
 <body>
-    <div class="card ">
-        <div class="card-header background-{{ pokemon.primary_type|lower }}">
-            <span class="hp">HP {{ pokemon.hp|default:"??" }}</span>
-        </div>
-        <div class="pokemon-image-container">
-            <img id="pokemon-image-{{ pokemon.id }}" 
-                    src="{{ pokemon.image_url }}" 
-                    data-static="{{ pokemon.image_url }}" 
-                    data-animated="{{ pokemon.gif_url }}" 
-                    alt="{{ pokemon.name }}" 
-                    class="pokemon-img">
-        </div>
-        <h2 class="pokemon-name">{{ pokemon.name|capfirst }}</h2>
+    <div class="container d-flex justify-content-center my-5">
+        <div class="card ">
+            <div class="card-header background-{{ pokemon.primary_type|lower }}">
+                <span class="hp">HP {{ pokemon.hp|default:"??" }}</span>
+            </div>
+            <div class="pokemon-image-container">
+                <img id="pokemon-image-{{ pokemon.id }}" 
+                        src="{{ pokemon.image_url }}" 
+                        data-static="{{ pokemon.image_url }}" 
+                        data-animated="{{ pokemon.gif_url }}" 
+                        alt="{{ pokemon.name }}" 
+                        class="pokemon-img">
+            </div>
+            <h2 class="pokemon-name">{{ pokemon.name|capfirst }}</h2>
 
-        {% if pokemon.primary_type %}
-            <span class="pokemon-type tipo-{{ pokemon.primary_type }}">{{ pokemon.primary_type }}</span>
-        {% endif %}
+            {% if pokemon.primary_type %}
+                <span class="pokemon-type tipo-{{ pokemon.primary_type }}">{{ pokemon.primary_type }}</span>
+            {% endif %}
 
-        <div class="stats">
-            <div>
-                <strong>{{ pokemon.attack|default:"--" }}</strong>
-                <span>Attack</span>
+            <div class="stats">
+                <div>
+                    <strong>{{ pokemon.attack|default:"--" }}</strong>
+                    <span>Attack</span>
+                </div>
+                <div>
+                    <strong>{{ pokemon.defense|default:"--" }}</strong>
+                    <span>Defense</span>
+                </div>
+                <div>
+                    <strong>{{ pokemon.speed|default:"--" }}</strong>
+                    <span>Speed</span>
+                </div>
             </div>
-            <div>
-                <strong>{{ pokemon.defense|default:"--" }}</strong>
-                <span>Defense</span>
-            </div>
-            <div>
-                <strong>{{ pokemon.speed|default:"--" }}</strong>
-                <span>Speed</span>
-            </div>
+        </div>
+    </div>
+    <div class="container d-flex justify-content-center my-5">
+        <div class="characteristics mt-4">
+            <h4 class="text-center">Characteristics</h4>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Base Experience:</strong> {{ pokemon.base_experience|default:"--" }}</li>
+                <li class="list-group-item"><strong>Height:</strong> {{ pokemon.height|default:"--" }}</li>
+                <li class="list-group-item"><strong>Weight:</strong> {{ pokemon.weight|default:"--" }}</li>
+                <li class="list-group-item"><strong>Generation:</strong> {{ pokemon.generation|default:"--" }} ({{ pokemon.generation_number|default:"--" }})</li>
+                <li class="list-group-item"><strong>Abilities:</strong>
+                    {% if pokemon.abilities.all %}
+                        <ul>
+                            {% for ability in pokemon.abilities.all %}
+                                <li>{{ ability.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        --
+                    {% endif %}
+                </li>
+                <li class="list-group-item"><strong>Moves:</strong>
+                    {% if pokemon.moves.all %}
+                        <ul>
+                            {% for move in pokemon.moves.all %}
+                                <li>{{ move.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        --
+                    {% endif %}
+                </li>
+            </ul>
         </div>
     </div>
 {% endblock content %}

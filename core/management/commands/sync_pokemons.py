@@ -135,7 +135,7 @@ class Command(BaseCommand):
     
     def sync_pokemons(self):
         """Sincroniza os Pokémon da PokéAPI."""
-        for i in range(1, 252):  # Pokémons de 1 a 251
+        for i in range(1, 1026):  # Pokémons de 1 a 251
             url = f"{POKEAPI_BASE}{i}/"
             response = requests.get(url)
 

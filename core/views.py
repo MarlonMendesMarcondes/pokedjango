@@ -68,6 +68,30 @@ class PokemonListView(ListView):
         context['type_colors'] = TYPE_COLORS
         return context
 
+    def render_to_response(self, context, **response_kwargs):
+        if self.request.GET.get('format') == 'json':
+            pokemons = context['pokemons']
+            data = {
+                'pokemons': [
+                    {
+                        'id': pokemon.id,
+                        'name': pokemon.name,
+                        'hp': pokemon.hp,
+                        'image_url': pokemon.image.url if pokemon.image else pokemon.image_url,
+                        'primary_type': pokemon.primary_type.name if pokemon.primary_type else None,
+                        'secondary_type': pokemon.secondary_type.name if pokemon.secondary_type else None,
+                        'attack': pokemon.attack,
+                        'defense': pokemon.defense,
+                        'speed': pokemon.speed,
+                        'card_style': pokemon.card_style,
+                    }
+                    for pokemon in pokemons
+                ],
+                'has_next': context['page_obj'].has_next()
+            }
+            return JsonResponse(data)
+        return super().render_to_response(context, **response_kwargs)
+
 
 class PokemonCarouselView(PokemonListView):
     template_name = 'pokedex/carrossel.html'
